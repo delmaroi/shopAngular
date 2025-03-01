@@ -1,0 +1,52 @@
+<div class="filters">
+  <!-- ✅ Search Box -->
+  <dx-text-box
+    [(value)]="searchQuery"
+    (valueChange)="onSearchChange($event)"
+    placeholder="Search products..."
+  ></dx-text-box>
+
+  <!-- ✅ Category Filter -->
+  <dx-select-box
+    [items]="categories"
+    [(value)]="selectedCategory"
+    (valueChange)="onCategoryChange($event)"
+    placeholder="Select category"
+  ></dx-select-box>
+
+  <!-- ✅ Sorting -->
+  <dx-select-box
+    [items]="['name', 'price']"
+    [(value)]="sortBy"
+    (valueChange)="onSortChange($event)"
+    placeholder="Sort by"
+  ></dx-select-box>
+
+  <dx-button
+    text="Reset Filters"
+    type="danger"
+    (onClick)="resetFilters()"
+  ></dx-button>
+</div>
+
+<dx-data-grid
+  *ngIf="!isLoading"
+  [dataSource]="products"
+  [showBorders]="true"
+  (rowClick)="onRowClick($event)"
+>
+  <dxi-column dataField="name" caption="Name"></dxi-column>
+  <dxi-column dataField="category" caption="Category"></dxi-column>
+  <dxi-column dataField="description" caption="Description"></dxi-column>
+  <dxi-column dataField="price" caption="Price" format="currency"></dxi-column>
+
+  <dxi-column
+    caption="Action"
+    [cellTemplate]="customActionTemplate"
+  ></dxi-column>
+</dx-data-grid>
+
+<div *ngIf="isLoading" class="loading-container">
+  <dx-load-indicator [visible]="true"></dx-load-indicator>
+  <p>Loading products...</p>
+</div>

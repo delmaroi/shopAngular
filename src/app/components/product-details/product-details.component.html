@@ -1,0 +1,20 @@
+<!-- ✅ Show loading indicator while fetching data -->
+<div *ngIf="isLoading" class="loading-container">
+  <dx-load-indicator [visible]="true"></dx-load-indicator>
+  <p>Loading product details...</p>
+</div>
+
+<!-- ✅ Show product details only when loaded -->
+<div *ngIf="!isLoading && product">
+  <h2>{{ product.name }}</h2>
+  <p><strong>Category:</strong> {{ product.category }}</p>
+  <p><strong>Description:</strong> {{ product.description }}</p>
+  <p><strong>Price:</strong> {{ product.price | currency : "$" }}</p>
+
+  <dx-button text="Back" type="default" [routerLink]="'/'"></dx-button>
+</div>
+
+<!-- ✅ Show error message if product is not found -->
+<div *ngIf="!isLoading && !product">
+  <p>Product not found.</p>
+</div>
